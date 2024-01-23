@@ -123,7 +123,7 @@ resource "aws_eip" "coderunner_eip" {
     bucket         = "tf-state-wmill"  # Replace with your bucket name
     key            = "state_file/terraform.tfstate"
     region         = "us-east-1"                  # Replace with your bucket region
-    dynamodb_table = "lock_table_tfwm"              # Replace with your DynamoDB table name
+    dynamodb_table = "lock_table_tfw"              # Replace with your DynamoDB table name
     encrypt        = true
   }
    
