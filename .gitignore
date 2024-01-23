@@ -1,2 +1,4 @@
 tf_install.sh
 .DS_STORE
+.terraform
+terraform.tfstate
