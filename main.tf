@@ -97,7 +97,7 @@ resource "aws_security_group" "cr_allow_web" {
 # Create the EC2 server
 resource "aws_instance" "coderunner_ubuntu" {
     ami = "ami-0fc5d935ebf8bc3bc" # Ubuntu 64-bit
-    instance_type = "t2.large" # need enough memory for pytorch and the ML model
+    instance_type = "t2.micro" # need enough memory for pytorch and the ML model
     subnet_id = aws_subnet.cr_subnet.id
     vpc_security_group_ids = [aws_security_group.cr_allow_web.id]
     # key_name =  aws_key_pair.coderunner_key.key_name
@@ -118,6 +118,18 @@ resource "aws_eip" "coderunner_eip" {
   instance = aws_instance.coderunner_ubuntu.id
   # vpc = true
 }
+ terraform {
+  backend "s3" {
+    bucket         = "tf-state-wmill"  # Replace with your bucket name
+    key            = "state_file/terraform.tfstate"
+    region         = "us-east-1"                  # Replace with your bucket region
+    dynamodb_table = "lock_table_tfwm"              # Replace with your DynamoDB table name
+    encrypt        = true
+  }
+   
+ }
+
+
 
 # Associate the elastic IP with your EC2 public IP address
 output "public_ip" {
