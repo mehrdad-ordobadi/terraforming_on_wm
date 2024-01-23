@@ -1,6 +1,6 @@
 provider "aws" {
   region = "us-east-1"  # Replace with your preferred AWS region
-  profile = "personal-aws" # replace with your AWS CLI profile`
+#   profile = "personal-aws" # replace with your AWS CLI profile`
 }
 
 # Create your VPC
