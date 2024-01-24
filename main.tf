@@ -3,6 +3,11 @@ provider "aws" {
 #   profile = "personal-aws" # replace with your AWS CLI profile`
 }
 
+variable "environment_name" {
+  description = "The name of the environment"
+  type        = string
+}
+
 # Create your VPC
 resource "aws_vpc" "coderunner_vpc" {
   cidr_block =  "10.0.0.0/16" # CIDR block for the VPC
@@ -121,7 +126,7 @@ resource "aws_eip" "coderunner_eip" {
  terraform {
   backend "s3" {
     bucket         = "tf-state-wmill"  # Replace with your bucket name
-    key            = "state_file/terraform.tfstate"
+    key            = "envs/${var.environment_name}/terraform.tfstate"
     region         = "us-east-1"                  # Replace with your bucket region
     dynamodb_table = "lock_table_tfw"              # Replace with your DynamoDB table name
     encrypt        = true
