@@ -12,7 +12,7 @@ variable "environment_name" {
 resource "aws_vpc" "coderunner_vpc" {
   cidr_block =  "10.0.0.0/16" # CIDR block for the VPC
   tags = {
-    Name = "coderunner_vpc" # Name of your VPC
+    Name = "${var.environment_name}" # Name of your VPC
   }
 }   
 
@@ -20,7 +20,7 @@ resource "aws_vpc" "coderunner_vpc" {
 resource "aws_internet_gateway" "cr_igw" {
   vpc_id = aws_vpc.coderunner_vpc.id
   tags = {
-    Name = "coderunner_igw"
+    Name = "${var.environment_name}_igw"
   }
 }
 
@@ -30,7 +30,7 @@ resource "aws_subnet" "cr_subnet" {
   cidr_block = "10.0.1.0/24"
   map_public_ip_on_launch = true # Enable auto-assign public IP
   tags = {
-    Name = "coderunner_subnet"
+    Name = "${var.environment_name}_subnet"
   }
 }
 
@@ -114,7 +114,7 @@ resource "aws_instance" "coderunner_ubuntu" {
     }
 
     tags = {
-      Name = "coderunner_xray_deploy"
+      Name = "${var.environment_name}"
     }
 }
 
